@@ -1,0 +1,15 @@
+name = "ungkapin-backend"
+main = "server/index.ts"
+compatibility_date = "2024-04-03"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+NODE_ENV = "production"
+
+# Add your environment variables here or in the Cloudflare Dashboard
+# DATABASE_URL = "your-database-url"
+# SESSION_SECRET = "your-session-secret"
+
+[[routes]]
+pattern = "api.ungkapin.com/*"
+script = "ungkapin-backend"
