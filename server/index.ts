@@ -1,5 +1,6 @@
 import express, { type Request, Response, NextFunction } from "express";
 import session from "express-session";
+import cors from "cors";
 import { registerRoutes } from "./routes";
 import { registerAuthRoutes, seedDefaultAdmin, seedDemoInvitation, seedPricingPlans, seedBankSettings } from "./auth";
 import { registerUserAuthRoutes } from "./userAuth";
@@ -21,6 +22,11 @@ declare module "http" {
     rawBody: unknown;
   }
 }
+
+app.use(cors({
+  origin: [process.env.FRONTEND_URL || "*"],
+  credentials: true
+}));
 
 app.use(
   express.json({
