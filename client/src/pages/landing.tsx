@@ -278,13 +278,13 @@ export default function Landing() {
   const navLinks = ["Fitur", "Cara Kerja", "Tema", "Harga", "FAQ"];
 
   return (
-    <div className="min-h-screen bg-white text-foreground font-sans">
+    <div className="min-h-screen text-foreground font-sans">
       {/* Navbar */}
       <header
         data-testid="navbar"
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
-            ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-100"
+            ? "glass shadow-soft-lg border-b border-white/30"
             : "bg-transparent"
         }`}
       >
@@ -292,10 +292,10 @@ export default function Landing() {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <a href="/" data-testid="logo" className="flex items-center gap-2 group">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shadow-sm">
+              <div className="w-8 h-8 bg-gradient-to-br from-yellow-600 to-rose-500 rounded-xl flex items-center justify-center shadow-soft transition-all duration-300 group-hover:shadow-soft-lg group-hover:scale-105">
                 <Heart className="w-4 h-4 text-white fill-white" />
               </div>
-              <span className="text-xl font-bold text-slate-900 tracking-tight">WedSaas</span>
+              <span className="text-xl font-serif font-bold bg-gradient-to-r from-yellow-700 to-rose-600 bg-clip-text text-transparent tracking-tight">WedSaas</span>
             </a>
 
             {/* Desktop Nav */}
@@ -305,9 +305,10 @@ export default function Landing() {
                   key={link}
                   href={`#${link.toLowerCase().replace(" ", "-")}`}
                   data-testid={`nav-link-${link.toLowerCase()}`}
-                  className="text-sm font-medium text-slate-600 hover-elevate transition-colors"
+                  className="text-sm font-medium text-foreground/70 hover:text-foreground transition-all duration-300 relative group"
                 >
                   {link}
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-yellow-600 to-rose-500 transition-all duration-300 group-hover:w-full" />
                 </a>
               ))}
             </nav>
@@ -315,12 +316,12 @@ export default function Landing() {
             {/* Desktop CTA Buttons */}
             <div className="hidden md:flex items-center gap-3">
               <a href="/login">
-                <Button variant="ghost" size="sm" data-testid="button-masuk">
+                <Button variant="ghost" size="sm" data-testid="button-masuk" className="hover:bg-white/10 transition-all duration-300">
                   Masuk
                 </Button>
               </a>
               <a href="/register">
-                <Button size="sm" data-testid="button-mulai-gratis">
+                <Button size="sm" data-testid="button-mulai-gratis" className="bg-gradient-to-r from-yellow-600 to-rose-500 hover:shadow-soft-lg hover:-translate-y-0.5 transition-all duration-300 text-white border-0">
                   Buat Undangan
                 </Button>
               </a>
@@ -328,7 +329,7 @@ export default function Landing() {
 
             {/* Mobile Menu Toggle */}
             <button
-              className="md:hidden p-2 rounded-md text-slate-600"
+              className="md:hidden p-2 rounded-lg text-foreground/70 hover:bg-white/10 transition-all duration-300"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               data-testid="button-mobile-menu"
             >
@@ -339,23 +340,24 @@ export default function Landing() {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden bg-white border-t border-slate-100 px-4 py-4 flex flex-col gap-4">
-            {navLinks.map((link) => (
+          <div className="md:hidden glass border-t border-white/30 px-4 py-4 flex flex-col gap-4 animate-fade-in-up">
+            {navLinks.map((link, idx) => (
               <a
                 key={link}
                 href={`#${link.toLowerCase()}`}
-                className="text-sm font-medium text-slate-700 py-1"
+                className="text-sm font-medium text-foreground/80 py-2 px-3 rounded-lg hover:bg-white/10 transition-all duration-300"
                 onClick={() => setMobileMenuOpen(false)}
+                style={{ animationDelay: `${idx * 0.05}s` }}
               >
                 {link}
               </a>
             ))}
-            <div className="flex flex-col gap-2 pt-2 border-t border-slate-100">
+            <div className="flex flex-col gap-2 pt-2 border-t border-white/20">
               <a href="/login" onClick={() => setMobileMenuOpen(false)}>
-                <Button variant="outline" size="sm" className="w-full" data-testid="button-masuk-mobile">Masuk</Button>
+                <Button variant="outline" size="sm" className="w-full border-white/30 hover:bg-white/10 transition-all duration-300">Masuk</Button>
               </a>
               <a href="/register" onClick={() => setMobileMenuOpen(false)}>
-                <Button size="sm" className="w-full" data-testid="button-mulai-gratis-mobile">Buat Undangan</Button>
+                <Button size="sm" className="w-full bg-gradient-to-r from-yellow-600 to-rose-500 text-white border-0 hover:shadow-soft-lg transition-all duration-300">Buat Undangan</Button>
               </a>
             </div>
           </div>
@@ -368,39 +370,42 @@ export default function Landing() {
         data-testid="section-hero"
         className="relative pt-28 pb-20 lg:pt-36 lg:pb-28 overflow-hidden"
       >
-        {/* Background decorations */}
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 rounded-full blur-3xl opacity-60" />
-          <div className="absolute top-20 right-10 w-32 h-32 bg-blue-100 rounded-full blur-2xl opacity-40" />
-          <div className="absolute bottom-10 left-10 w-48 h-48 bg-rose-50 rounded-full blur-3xl opacity-50" />
+        {/* Background decorations - Animated Blurred Blobs */}
+        <div className="absolute inset-0 -z-10 overflow-hidden">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-gradient-to-br from-yellow-200/40 via-rose-200/30 to-purple-200/20 rounded-full blur-3xl opacity-40 blob-1" />
+          <div className="absolute top-20 right-10 w-80 h-80 bg-gradient-to-br from-rose-200/30 to-pink-200/20 rounded-full blur-3xl opacity-30 blob-2" />
+          <div className="absolute -bottom-20 left-1/4 w-96 h-96 bg-gradient-to-tr from-yellow-100/30 to-amber-100/20 rounded-full blur-3xl opacity-35 blob-3" />
+          <div className="absolute top-1/2 -right-32 w-96 h-96 bg-gradient-to-l from-rose-100/25 to-pink-100/15 rounded-full blur-3xl opacity-25" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           {/* Pill badge */}
-          <div className="inline-flex items-center gap-2 bg-blue-50 border border-blue-100 text-blue-700 text-xs font-semibold px-4 py-1.5 rounded-full mb-6">
-            <Sparkles className="w-3.5 h-3.5" />
+          <div className="inline-flex items-center gap-2 glass-sm text-foreground/80 text-xs font-semibold px-4 py-2 rounded-full mb-6 animate-fade-in-up">
+            <Sparkles className="w-3.5 h-3.5 animate-spin" style={{ animationDuration: '3s' }} />
             Undangan Digital Pernikahan Terpercaya di Indonesia
           </div>
 
           {/* Heading */}
           <h1
             data-testid="hero-title"
-            className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 leading-tight tracking-tight max-w-4xl mx-auto"
+            className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-foreground leading-tight tracking-tight max-w-4xl mx-auto animate-fade-in-up" 
+            style={{ animationDelay: '0.1s' }}
           >
             {heroData.hero_title}
           </h1>
 
           <p
             data-testid="hero-subtitle"
-            className="mt-6 text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed"
+            className="mt-8 text-lg text-foreground/70 max-w-2xl mx-auto leading-relaxed animate-fade-in-up"
+            style={{ animationDelay: '0.2s' }}
           >
             {heroData.hero_subtitle}
           </p>
 
           {/* CTA Buttons */}
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
             <a href={heroData.hero_cta_link || HERO_DEFAULTS.hero_cta_link}>
-              <Button size="lg" data-testid="button-hero-buat-undangan" className="gap-2 px-8 text-base">
+              <Button size="lg" data-testid="button-hero-buat-undangan" className="gap-2 px-8 text-base bg-gradient-to-r from-yellow-600 to-rose-500 hover:shadow-soft-lg hover:-translate-y-1 transition-all duration-300 text-white border-0 font-semibold">
                 {heroData.hero_cta_primary}
                 <ChevronRight className="w-4 h-4" />
               </Button>
@@ -410,7 +415,7 @@ export default function Landing() {
                 variant="outline"
                 size="lg"
                 data-testid="button-hero-lihat-tema"
-                className="gap-2 px-8 text-base"
+                className="gap-2 px-8 text-base glass border-white/30 hover:bg-white/20 transition-all duration-300 font-semibold"
               >
                 <Eye className="w-4 h-4" />
                 {heroData.hero_cta_secondary}
@@ -419,31 +424,32 @@ export default function Landing() {
           </div>
 
           {/* Stats */}
-          <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-12">
+          <div className="mt-14 flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-8 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
             {[
               { icon: Users, value: "10.000+", label: "Pasangan Bahagia" },
               { icon: Star, value: "4.9/5", label: "Rating dari Pengguna" },
               { icon: Zap, value: "5 Menit", label: "Siap Dibagikan" },
-            ].map((stat) => (
+            ].map((stat, idx) => (
               <div
                 key={stat.label}
                 data-testid={`stat-${stat.label.toLowerCase().replace(/\s/g, "-")}`}
-                className="flex items-center gap-3"
+                className="flex items-center gap-3 glass-sm px-4 py-3 rounded-xl hover:bg-white/20 transition-all duration-300 scroll-reveal" 
+                style={{ animationDelay: `${0.4 + idx * 0.1}s` }}
               >
-                <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center">
-                  <stat.icon className="w-5 h-5 text-primary" />
+                <div className="w-10 h-10 bg-gradient-to-br from-yellow-200 to-rose-200 rounded-lg flex items-center justify-center">
+                  <stat.icon className="w-5 h-5 text-yellow-700" />
                 </div>
                 <div className="text-left">
-                  <div className="text-xl font-bold text-slate-900">{stat.value}</div>
-                  <div className="text-xs text-slate-500">{stat.label}</div>
+                  <div className="text-lg font-bold text-foreground">{stat.value}</div>
+                  <div className="text-xs text-foreground/60">{stat.label}</div>
                 </div>
               </div>
             ))}
           </div>
 
           {/* Hero mockup */}
-          <div className="mt-16 relative max-w-4xl mx-auto">
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-200 bg-white">
+          <div className="mt-16 relative max-w-4xl mx-auto animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
+            <div className="relative rounded-3xl overflow-hidden shadow-soft-lg border border-white/30 bg-white/10 backdrop-blur-md glass-lg hover:shadow-soft-lg transition-all duration-300 hover:-translate-y-1">
               {/* Browser chrome */}
               <div className="bg-slate-100 px-4 py-3 flex items-center gap-2 border-b border-slate-200">
                 <div className="flex gap-1.5">
@@ -516,34 +522,39 @@ export default function Landing() {
       <section
         id="fitur"
         data-testid="section-features"
-        className="py-20 lg:py-28 bg-slate-50"
+        className="py-20 lg:py-28 relative"
       >
+        {/* Background decorations */}
+        <div className="absolute inset-0 -z-10 overflow-hidden">
+          <div className="absolute top-1/3 right-0 w-96 h-96 bg-gradient-to-l from-rose-200/30 to-transparent rounded-full blur-3xl opacity-20" />
+          <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-gradient-to-t from-yellow-200/20 to-transparent rounded-full blur-3xl opacity-15" />
+        </div>
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <Badge variant="secondary" className="mb-4">Fitur Unggulan</Badge>
-            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">
+          <div className="text-center mb-16 scroll-reveal">
+            <Badge variant="secondary" className="mb-4 glass-sm">Fitur Unggulan</Badge>
+            <h2 className="text-3xl sm:text-4xl font-serif font-bold text-foreground tracking-tight">
               Semua yang Kamu Butuhkan
             </h2>
-            <p className="mt-4 text-slate-500 max-w-xl mx-auto">
+            <p className="mt-4 text-foreground/70 max-w-xl mx-auto">
               Dari undangan hingga ucapan tamu — semua tersedia dalam satu link yang bisa langsung dibagikan
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {features.map((feature, i) => (
-              <Card
+              <div
                 key={i}
                 data-testid={`card-feature-${i}`}
-                className="group border-card-border hover-elevate cursor-default transition-all duration-200"
+                className="glass-card p-6 group hover:scale-105 cursor-default scroll-reveal" 
+                style={{ animationDelay: `${i * 0.1}s` }}
               >
-                <CardContent className="p-6">
-                  <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-blue-100 transition-colors">
-                    <feature.icon className="w-6 h-6 text-primary" />
-                  </div>
-                  <h3 className="font-semibold text-slate-900 mb-2">{feature.title}</h3>
-                  <p className="text-sm text-slate-500 leading-relaxed">{feature.desc}</p>
-                </CardContent>
-              </Card>
+                <div className="w-12 h-12 bg-gradient-to-br from-yellow-200 to-rose-200 rounded-xl flex items-center justify-center mb-4 group-hover:shadow-soft transition-all duration-300">
+                  <feature.icon className="w-6 h-6 text-yellow-700" />
+                </div>
+                <h3 className="font-semibold text-foreground mb-2">{feature.title}</h3>
+                <p className="text-sm text-foreground/70 leading-relaxed">{feature.desc}</p>
+              </div>
             ))}
           </div>
         </div>
@@ -553,15 +564,20 @@ export default function Landing() {
       <section
         id="cara-kerja"
         data-testid="section-how-it-works"
-        className="py-20 lg:py-28 bg-white"
+        className="py-20 lg:py-28 relative"
       >
+        {/* Background decorations */}
+        <div className="absolute inset-0 -z-10 overflow-hidden">
+          <div className="absolute top-0 left-1/3 w-96 h-96 bg-gradient-to-b from-yellow-200/20 to-transparent rounded-full blur-3xl opacity-15" />
+        </div>
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <Badge variant="secondary" className="mb-4">Cara Kerja</Badge>
-            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">
+          <div className="text-center mb-16 scroll-reveal">
+            <Badge variant="secondary" className="mb-4 glass-sm">Cara Kerja</Badge>
+            <h2 className="text-3xl sm:text-4xl font-serif font-bold text-foreground tracking-tight">
               Undangan Siap dalam 4 Langkah
             </h2>
-            <p className="mt-4 text-slate-500 max-w-xl mx-auto">
+            <p className="mt-4 text-foreground/70 max-w-xl mx-auto">
               Tidak perlu desainer, tidak perlu nunggu lama — dari daftar hingga siap kirim hanya butuh beberapa menit
             </p>
           </div>
@@ -571,16 +587,17 @@ export default function Landing() {
               <div
                 key={i}
                 data-testid={`step-${i + 1}`}
-                className="relative flex flex-col items-center text-center"
+                className="relative flex flex-col items-center text-center scroll-reveal"
+                style={{ animationDelay: `${i * 0.1}s` }}
               >
                 {i < steps.length - 1 && (
-                  <div className="hidden lg:block absolute top-9 left-[calc(50%+2rem)] right-[-50%] h-px bg-gradient-to-r from-blue-200 to-slate-200" />
+                  <div className="hidden lg:block absolute top-9 left-[calc(50%+2rem)] right-[-50%] h-px bg-gradient-to-r from-yellow-400/40 to-rose-400/20" />
                 )}
-                <div className="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center shadow-md shadow-blue-200 mb-5">
+                <div className="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-yellow-600 to-rose-500 flex items-center justify-center shadow-soft mb-5 hover:shadow-soft-lg transition-all duration-300 hover:scale-110">
                   <span className="text-white font-bold text-lg">{step.num}</span>
                 </div>
-                <h3 className="font-semibold text-slate-900 mb-2">{step.title}</h3>
-                <p className="text-sm text-slate-500 leading-relaxed">{step.desc}</p>
+                <h3 className="font-semibold text-foreground mb-2">{step.title}</h3>
+                <p className="text-sm text-foreground/70 leading-relaxed">{step.desc}</p>
               </div>
             ))}
           </div>
@@ -591,15 +608,21 @@ export default function Landing() {
       <section
         id="tema"
         data-testid="section-themes"
-        className="py-20 lg:py-28 bg-slate-50"
+        className="py-20 lg:py-28 relative"
       >
+        {/* Background decorations */}
+        <div className="absolute inset-0 -z-10 overflow-hidden">
+          <div className="absolute top-1/2 -left-32 w-96 h-96 bg-gradient-to-r from-rose-200/20 to-transparent rounded-full blur-3xl opacity-15" />
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-t from-yellow-200/15 to-transparent rounded-full blur-3xl opacity-10" />
+        </div>
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <Badge variant="secondary" className="mb-4">Koleksi Tema</Badge>
-            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">
+          <div className="text-center mb-16 scroll-reveal">
+            <Badge variant="secondary" className="mb-4 glass-sm">Koleksi Tema</Badge>
+            <h2 className="text-3xl sm:text-4xl font-serif font-bold text-foreground tracking-tight">
               Desain yang Memukau Tamu
             </h2>
-            <p className="mt-4 text-slate-500 max-w-xl mx-auto">
+            <p className="mt-4 text-foreground/70 max-w-xl mx-auto">
               Pilih tema yang mencerminkan kepribadian dan cerita cinta kalian — dari nuansa mewah hingga simpel elegan
             </p>
           </div>
@@ -609,8 +632,9 @@ export default function Landing() {
               <div
                 key={i}
                 data-testid={`card-theme-${i}`}
-                className="group rounded-xl border border-slate-200 bg-white shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 overflow-visible cursor-pointer"
+                className="glass-card rounded-2xl overflow-hidden cursor-pointer group hover:scale-105 scroll-reveal" 
                 onClick={() => window.open(`/demo/${theme.demoSlug}`, "_blank")}
+                style={{ animationDelay: `${i * 0.1}s` }}
               >
                 {/* Theme preview image area */}
                 <div
@@ -636,25 +660,25 @@ export default function Landing() {
                   </div>
                   {theme.badge && (
                     <div className="absolute top-3 right-3">
-                      <span className="bg-white/90 backdrop-blur-sm text-slate-900 text-xs font-semibold px-2.5 py-1 rounded-full">
+                      <span className="bg-white/80 backdrop-blur-md text-foreground text-xs font-semibold px-2.5 py-1 rounded-full border border-white/50">
                         {theme.badge}
                       </span>
                     </div>
                   )}
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-200 rounded-t-xl flex items-center justify-center opacity-0 group-hover:opacity-100">
-                    <span className="bg-white/90 text-slate-900 text-xs font-semibold px-3 py-1.5 rounded-full flex items-center gap-1.5">
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 rounded-t-2xl flex items-center justify-center opacity-0 group-hover:opacity-100">
+                    <span className="bg-white/80 backdrop-blur-md text-foreground text-xs font-semibold px-3 py-1.5 rounded-full flex items-center gap-1.5 border border-white/50">
                       <Eye className="w-3 h-3" /> Buka Demo
                     </span>
                   </div>
                 </div>
 
                 {/* Card info */}
-                <div className="p-4">
+                <div className="p-4 bg-white/5 backdrop-blur-sm">
                   <div className="flex items-center justify-between mb-3">
-                    <h3 className="font-semibold text-slate-900 text-sm">{theme.name}</h3>
+                    <h3 className="font-semibold text-foreground text-sm">{theme.name}</h3>
                     <div className="flex items-center gap-1">
-                      <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-                      <span className="text-xs font-medium text-slate-700">{theme.rating}</span>
+                      <Star className="w-3.5 h-3.5 fill-yellow-500 text-yellow-500" />
+                      <span className="text-xs font-medium text-foreground/70">{theme.rating}</span>
                     </div>
                   </div>
                   <div className="flex gap-2">
